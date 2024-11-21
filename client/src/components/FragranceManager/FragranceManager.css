@@ -1,0 +1,54 @@
+.fragrance-manager {
+  padding: 16px;
+  overflow: hidden;
+}
+
+.fragrance-header {
+  margin-bottom: 16px;
+}
+
+.fragrance-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fragrance-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.fragrance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fragrance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.fragrance-details {
+  flex: 1;
+}
+
+.fragrance-main {
+  display: flex;
+  gap: 16px;
+  margin: 8px 0;
+}
+
+.fragrance-actions {
+  display: flex;
+  gap: 8px;
+}

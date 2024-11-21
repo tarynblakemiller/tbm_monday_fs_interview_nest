@@ -1,0 +1,127 @@
+.order-wrapper {
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  margin: 1rem;
+}
+
+.order-maker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+  padding: 0 20px;
+}
+
+.order-maker-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 20px;
+}
+
+.input-field-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+}
+
+.input-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-item {
+  display: block;
+  margin-bottom: 0.25rem;
+  width: 100%;
+}
+
+.meatball-button {
+  border: none;
+  background: none;
+}
+
+.meatball-button:hover {
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.order-btn-container {
+  width: calc(100% - 40px);
+}
+.order-btn {
+  cursor: pointer;
+  transition: background-color 0.3s;
+  flex: 4;
+  justify-content: flex-start;
+}
+
+.order-btn:hover {
+  background-color: #0056b3;
+}
+
+.fragrance-selector-container {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.fragrance-selector {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-menu {
+  width: 100%;
+}
+
+.error-text {
+  margin-top: 8px;
+  color: var(--negative-color-500);
+}
+
+.menu-spacer {
+  height: 200px;
+}
+
+.error-container {
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: #dc2626;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #fee2e2;
+  border-radius: 4px;
+  background-color: #fef2f2;
+}
+
+.fragrance-options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 20px;
+}
+
+/* .monday-style-tab-inner {
+  text-decoration: none !important;
+} */
+
+.tabWrapper_ca9eac66b9 {
+  border: none !important;
+}
+
+.tabsWrapper_fa37fe36d8 {
+  padding-top: 10px;
+}

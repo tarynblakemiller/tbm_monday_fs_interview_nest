@@ -1,0 +1,14 @@
+{
+  "app_type": "board-view",
+  "name": "Order Maker",
+  "url": "YOUR_APP_URL",
+  "description": "Create and manage orders in Monday.com",
+  "permissions": ["boards:read", "boards:write", "items:write"],
+  "javascript_version": "es6",
+  "features": {
+    "oauth": {
+      "client_id": "${MONDAY_CLIENT_ID}",
+      "client_secret": "${MONDAY_CLIENT_SECRET}"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "name": "client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "clean": "rimraf dist",
+    "lint": "eslint . --ext ts,tsx",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@urql/core": "^5.0.8",
+    "axios": "^1.7.7",
+    "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6",
+    "lucide-react": "^0.456.0",
+    "monday-sdk-js": "^0.5.5",
+    "monday-ui-react-core": "^2.142.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.27.0",
+    "typescript": "^4.9.0",
+    "urql": "^4.2.1",
+    "vibe-storybook-components": "^0.19.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@graphql-codegen/cli": "^5.0.3",
+    "@types/monday-sdk-js": "^0.2.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/sequelize": "^4.28.20",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/coverage-v8": "^1.1.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.11.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.4.10",
+    "vitest": "^1.1.0"
+  }
+}
