@@ -38,5 +38,3 @@ export const appConfig = registerAs('app', () => ({
   port: parseInt(process.env.PORT || '5173', 10),
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
 }));
-
-// export const databaseConfig = registerAs('database', () => config.development);

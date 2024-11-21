@@ -1,13 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { MondayService } from '../monday/monday.service';
 import { ConfigService } from '@nestjs/config';
+import { InjectModel } from '@nestjs/sequelize';
+import { Order } from './entities/order.entity';
 
 @Injectable()
 export class OrderService {
   constructor(
     private readonly mondayService: MondayService,
     private readonly configService: ConfigService,
+    @InjectModel(Order)
+    private orderModel: typeof Order,
   ) {}
+
+  async createLocalOrder(data: {
+    boardId: string;
+    itemName: string;
+    columnValues: Record<string, any>;
+    groupId?: string;
+  }) {
+    try {
+      return await this.orderModel.create(data);
+    } catch (error) {
+      console.error('Create local order error:', error);
+      throw error;
+    }
+  }
 
   async createOrder(data: {
     boardId: string;

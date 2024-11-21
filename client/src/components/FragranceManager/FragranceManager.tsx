@@ -14,7 +14,7 @@ import "./FragranceManager.css";
 import ErrorMessage from "../Error/Error.js";
 
 const INITIAL_FORM_STATE: FormData = {
-  id: null,
+  id: "",
   fragrance_id: "",
   name: "",
   category: "",
@@ -29,7 +29,7 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
   } = useFragrances(true) as UseFragrancesReturn;
 
   const [showForm, setShowForm] = useState<boolean>(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>(INITIAL_FORM_STATE);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -66,6 +66,7 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
         return;
       }
       const payload: Partial<Fragrance> = {
+        id: formData.id,
         fragrance_id: formData.fragrance_id,
         name: formData.name,
         category: formData.category,

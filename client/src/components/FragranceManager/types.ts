@@ -2,7 +2,7 @@ import { Button, TextField, Dropdown } from "monday-ui-react-core";
 import type { ComponentProps } from "react";
 
 export interface Fragrance {
-  id: number;
+  id: string;
   fragrance_id: string;
   name: string;
   description: string;
@@ -25,7 +25,7 @@ export type DropdownOption = {
 };
 
 export interface FormData {
-  id: number | null;
+  id: string;
   fragrance_id: string;
   name: string;
   category: string;

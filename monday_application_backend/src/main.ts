@@ -7,6 +7,7 @@ import { up as seedFragrances } from './database/seeds/fragrances.seed';
 // import { NestExpressApplication } from '@nestjs/platform-express';
 // import { NextFunction, Request, Response } from 'express';
 import fragranceMigration from './database/migrations/20241120033806-create-fragrances';
+import orderMigration from './database/migrations/20240420000000-create-orders';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
@@ -15,11 +16,6 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
-
-  // app.use(function (request: Request, response: Response, next: NextFunction) {
-  //   response.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  //   next();
-  // });
 
   app.setGlobalPrefix('api');
   await app.listen(8080);
@@ -39,6 +35,7 @@ async function bootstrap() {
 
       console.log('Running migrations...');
       await fragranceMigration.up(queryInterface);
+      await orderMigration.up(queryInterface);
 
       console.log('Running seeds...');
       await seedFragrances(queryInterface);
@@ -48,11 +45,9 @@ async function bootstrap() {
       const tableCheck = await queryInterface.showAllTables();
       console.log('Available tables:', tableCheck);
 
-      // Check table content
       const results = await sequelize.query('SELECT * FROM fragrances');
       console.log('Fragrance records:', results[0]);
 
-      // Check table structure
       const tableDescription = await queryInterface.describeTable('fragrances');
       console.log('Table structure:', tableDescription);
     } catch (error) {

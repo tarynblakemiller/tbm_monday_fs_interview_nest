@@ -104,11 +104,11 @@ const OrderForm: React.FC = () => {
       }
       setErrorMessage(null);
     } catch (error) {
-      if (error instanceof Error) {
-      } else {
-        setErrorMessage("An unexpected error occurred. Please try again.");
-        console.error("Unhandled error:", error);
-      }
+      // if (error instanceof Error) {
+      // } else {
+      setErrorMessage("An unexpected error occurred. Please try again.");
+      console.error("Unhandled error:", error);
+      // }
     }
   };
 

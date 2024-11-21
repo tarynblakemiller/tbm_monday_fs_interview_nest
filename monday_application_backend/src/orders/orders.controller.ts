@@ -9,26 +9,26 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { OrderService } from './orders.service';
+import { CreateOrderDto } from './dto/create-order.dto';
 
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  async createOrder(
-    @Body()
-    orderData: {
-      boardId: string;
-      columnValues: Record<string, any>;
-      groupId?: string;
-    },
-  ) {
+  async createOrder(@Body() orderData: CreateOrderDto) {
     try {
-      const response = await this.orderService.createOrder(orderData);
-      return response;
+      const localOrder = await this.orderService.createLocalOrder(orderData);
+      const mondayResponse = await this.orderService.createOrder(orderData);
+
+      return {
+        monday: mondayResponse,
+        order: localOrder,
+      };
     } catch (error) {
+      console.error('Order creation error:', error);
       throw new HttpException(
-        'Failed to create order in Monday.com',
+        'Failed to create order',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
