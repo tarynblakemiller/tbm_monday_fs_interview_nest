@@ -27,9 +27,12 @@ export const fragranceApi = {
     apiClient.get("api/fragrances"),
   getById: (id: string): Promise<AxiosResponse<FragranceData>> =>
     apiClient.get(`api/fragrances/${id}`),
-  create: (
-    data: Omit<FragranceData, "id">
-  ): Promise<AxiosResponse<FragranceData>> =>
+  create: (data: {
+    name: string;
+    category: string;
+    description: string;
+    image_url?: string;
+  }): Promise<AxiosResponse<FragranceData>> =>
     apiClient.post("api/fragrances", data),
   update: (
     id: string,

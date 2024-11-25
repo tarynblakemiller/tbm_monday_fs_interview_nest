@@ -45,18 +45,54 @@ export const queries = {
     }
   `,
 
+  //   GET_ITEMS: gql`
+  //   query GetBoardItems ($boardId: ID!)  {
+  //   items(limit: 100, page: 1) {
+  //     id
+  //     name
+  //     column_values {
+  //       id
+  //       title
+  //       text
+  //     }
+  //   }
+  // }
+  // }
+
+  //   `
+
   GET_BOARD_ITEMS: gql`
     query GetBoardItems($boardId: ID!) {
       boards(ids: [$boardId]) {
-        items {
+        id
+        name
+        groups {
           id
-          name
-          column_values {
+          title
+          items {
             id
-            text
-            value
+            name
           }
         }
+      }
+    }
+  `,
+
+  CREATE_WEBHOOK: gql`
+    mutation CreateWebhook(
+      $boardId: ID!
+      $url: String!
+      $event: WebhookEventType!
+      $config: String!
+    ) {
+      create_webhook(
+        board_id: $boardId
+        url: $url
+        event: $event
+        config: $config
+      ) {
+        id
+        board_id
       }
     }
   `,

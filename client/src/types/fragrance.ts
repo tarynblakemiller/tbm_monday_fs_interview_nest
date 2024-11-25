@@ -8,3 +8,14 @@ export interface FragranceAttributes {
   created_at?: Date;
   updated_at?: Date;
 }
+
+export interface FragranceData {
+  id: string;
+  fragrance_id: string;
+  name: string;
+  category: string;
+  description: string;
+  image_url?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}

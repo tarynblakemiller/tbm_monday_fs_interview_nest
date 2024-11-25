@@ -1,5 +1,6 @@
 {
   "name": "monday_application_backend",
+  "type": "commonjs",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -8,6 +9,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "generate-signature": "ts-node src/scripts/webhook-signature.ts",
     "start": "ts-node src/main.ts",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -47,7 +49,8 @@
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
     "@types/express": "^5.0.0",
-    "@types/jest": "^29.5.2",
+    "@types/jest": "^29.5.14",
+    "@types/mocha": "^10.0.10",
     "@types/node": "^20.17.6",
     "@types/sequelize": "^4.28.20",
     "@types/supertest": "^6.0.0",

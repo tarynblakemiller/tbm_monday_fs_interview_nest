@@ -13,6 +13,7 @@ import { Fragrance } from './fragrances/entities/fragrance.entity';
 import { OrderFragrance } from './orders/entities/order-fragrance.entity';
 import { SEQUELIZE } from './constants/sequelize.constant';
 import { Sequelize } from 'sequelize-typescript';
+import { MondayWebhookModule } from './webhook-handler/monday-webhook.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { Sequelize } from 'sequelize-typescript';
     }),
     FragrancesModule,
     OrdersModule,
+    MondayWebhookModule,
   ],
   providers: [
     {

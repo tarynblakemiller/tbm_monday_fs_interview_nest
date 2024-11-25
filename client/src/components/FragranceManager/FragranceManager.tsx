@@ -1,4 +1,4 @@
-import { useState, FormEvent, useMemo } from "react";
+import { useState, FormEvent, useMemo, useEffect } from "react";
 import { fragranceApi } from "../../services/api";
 import useFragrances from "../../hooks/useFragrances/useFragrances";
 import { Button, Dropdown, TextField } from "monday-ui-react-core";
@@ -26,6 +26,7 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
     data: fragrances,
     categories,
     refetch,
+    nextIds,
   } = useFragrances(true) as UseFragrancesReturn;
 
   const [showForm, setShowForm] = useState<boolean>(false);
@@ -54,7 +55,7 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
   const handleTextChange = (field: keyof FormData) => (value: string) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: field === "id" ? (value ? Number(value) : null) : value,
+      [field]: value,
     }));
   };
 
@@ -66,8 +67,6 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
         return;
       }
       const payload: Partial<Fragrance> = {
-        id: formData.id,
-        fragrance_id: formData.fragrance_id,
         name: formData.name,
         category: formData.category,
         description: formData.description,
@@ -76,8 +75,14 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
       console.log("PAYLOAD", payload);
 
       if (editingId) {
-        await fragranceApi.update(editingId, payload);
+        await fragranceApi.update(editingId, formData);
       } else {
+        const payload = {
+          name: formData.name,
+          category: formData.category,
+          description: formData.description,
+          image_url: "https://example.com/placeholder.jpg",
+        };
         await fragranceApi.create(payload);
       }
       resetForm();
@@ -104,7 +109,7 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
     });
   };
 
-  const handleDelete = async (id: number): Promise<void> => {
+  const handleDelete = async (id: string): Promise<void> => {
     try {
       await fragranceApi.delete(id);
       await refetch();
@@ -139,16 +144,20 @@ const FragranceManager: React.FC<FragranceManagerProps> = () => {
             <TextField
               name="id"
               placeholder="ID"
-              value={formData.id?.toString() || ""}
+              value={editingId ? formData.id : nextIds.id}
               onChange={handleTextChange("id")}
               size={TextField.sizes.MEDIUM}
+              disabled
+              readonly
             />
             <TextField
               name="fragrance_id"
               placeholder="Fragrance ID"
-              value={formData.fragrance_id}
+              value={editingId ? formData.fragrance_id : nextIds.fragrance_id}
               onChange={handleTextChange("fragrance_id")}
               size={TextField.sizes.MEDIUM}
+              disabled
+              readonly
             />
             <TextField
               name="name"

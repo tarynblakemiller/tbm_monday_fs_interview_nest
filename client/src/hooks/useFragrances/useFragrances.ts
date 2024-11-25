@@ -6,6 +6,10 @@ import { Category } from "@/components/FragranceManager/types";
 const useFragrances = (transformForDropdown = false) => {
   const [data, setData] = useState<FragranceData[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [nextIds, setNextIds] = useState<{ id: string; fragrance_id: string }>({
+    id: "",
+    fragrance_id: "",
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -13,9 +17,18 @@ const useFragrances = (transformForDropdown = false) => {
     try {
       setLoading(true);
       const response = await fragranceApi.getAll();
+      console.log("RESPONSE", response);
       const fragrances = response.data.data || [];
 
       setData(fragrances);
+
+      const maxId = Math.max(...fragrances.map((f) => parseInt(f.id)));
+      const nextId = String(maxId + 1);
+      const paddedId = nextId.padStart(3, "0");
+      setNextIds({
+        id: nextId,
+        fragrance_id: `FRAG-${paddedId}`,
+      });
 
       if (transformForDropdown) {
         const uniqueCategories = fragrances.map(
@@ -47,6 +60,7 @@ const useFragrances = (transformForDropdown = false) => {
     categories,
     loading,
     error,
+    nextIds,
     refetch: fetchFragrances,
   };
 };

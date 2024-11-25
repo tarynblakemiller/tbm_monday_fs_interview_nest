@@ -32,13 +32,13 @@ export interface FormData {
   description: string;
 }
 
-export interface UseFragrancesReturn {
-  data: Fragrance[];
-  loading: boolean;
-  categories: Category[];
-  refetch: () => Promise<void>;
-  error: Error | null;
-}
+// export interface UseFragrancesReturn {
+//   data: Fragrance[];
+//   loading: boolean;
+//   categories: Category[];
+//   refetch: () => Promise<void>;
+//   error: Error | null;
+// }
 
 export interface FragranceManagerProps {
   onClose?: () => void;
@@ -66,3 +66,15 @@ export type FragranceButtonProps = Omit<
 > & {
   onClick?: () => void;
 };
+
+export interface UseFragrancesReturn {
+  data: Fragrance[];
+  categories: Category[];
+  loading: boolean;
+  error: Error | null;
+  nextIds: {
+    id: string;
+    fragrance_id: string;
+  };
+  refetch: () => Promise<void>;
+}

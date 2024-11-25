@@ -48,6 +48,15 @@ export class FragrancesController {
     };
   }
 
+  @Get('next-ids')
+  async getNextIds(): Promise<ApiResponse> {
+    const ids = await this.fragrancesService.getNextIds();
+    return {
+      status: 'success',
+      data: ids,
+    };
+  }
+
   @Put(':id')
   async update(
     @Param('id') id: string,

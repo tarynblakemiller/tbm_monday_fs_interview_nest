@@ -25,7 +25,7 @@ export class FragrancesService {
     return fragrance;
   }
 
-  async create(createFragranceDto: CreateFragranceDto) {
+  async getNextIds() {
     const lastId = await this.fragranceModel.findOne({
       order: [['id', 'DESC']],
       attributes: ['id'],
@@ -34,12 +34,36 @@ export class FragrancesService {
     const nextId = String(lastId ? parseInt(lastId.id) + 1 : 1);
     const paddedId = nextId.padStart(3, '0');
 
+    return {
+      id: nextId,
+      fragrance_id: `FRAG-${paddedId}`,
+    };
+  }
+
+  async create(createFragranceDto: CreateFragranceDto) {
+    console.log('DTO received:', createFragranceDto);
+    const allFragrances = await this.fragranceModel.findAll({
+      order: [['id', 'DESC']],
+    });
+    console.log(
+      'All existing IDs:',
+      allFragrances.map((f) => f.id),
+    );
+
+    const maxId = Math.max(...allFragrances.map((f) => parseInt(f.id)));
+    const nextId = String(maxId + 1);
+    const paddedId = nextId.padStart(3, '0');
+
+    const now = new Date();
+
     return this.fragranceModel.create({
       ...createFragranceDto,
-      id: String(nextId),
+      id: nextId,
       fragrance_id: `FRAG-${paddedId}`,
       image_url:
         createFragranceDto.image_url || 'https://example.com/placeholder.jpg',
+      created_at: now,
+      updated_at: now,
     });
   }
 
