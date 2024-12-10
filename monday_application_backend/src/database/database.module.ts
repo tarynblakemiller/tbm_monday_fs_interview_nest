@@ -1,5 +1,3 @@
-// import { databaseProviders } from '../providers/database.providers';
-
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Fragrance } from '../fragrances/entities/fragrance.entity';

@@ -43,6 +43,7 @@ export class OrderController {
       }
       return orders;
     } catch (error) {
+      console.error('Order fetching error:', error);
       throw new HttpException(
         'Failed to fetch orders from Monday.com',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -56,6 +57,7 @@ export class OrderController {
       const response = await this.orderService.deleteOrder(id);
       return response;
     } catch (error) {
+      console.error('Order deletion error:', error);
       throw new HttpException(
         'Failed to delete order from Monday.com',
         HttpStatus.INTERNAL_SERVER_ERROR,

@@ -13,24 +13,17 @@ import {
 // } from './types/monday-webhook.types';
 import { MondayWebhookService } from './monday-webhook.service';
 
+@Controller('/')
+export class MondayChallengeController {
+  @Post()
+  challenge() {
+    return this.challenge;
+  }
+}
+
 @Controller('webhooks/monday')
 export class MondayWebhookController {
   constructor(private readonly webhookService: MondayWebhookService) {}
-
-  @Get()
-  challenge(@Query('challenge') challenge: string) {
-    console.log('Challenge received:', challenge);
-    // Return ONLY the challenge string, not an object
-    return challenge;
-  }
-  // @Get()
-  // handleWebhookChallenge(@Query() query: Record<string, string>) {
-  //   console.log('Received query:', query);
-  //   if (query.challenge) {
-  //     return { challenge: query.challenge };
-  //   }
-  //   return { message: 'No challenge provided' };
-  // }
 
   @Get()
   async handleWebhook(

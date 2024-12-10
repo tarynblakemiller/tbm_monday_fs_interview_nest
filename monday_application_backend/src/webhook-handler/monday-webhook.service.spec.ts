@@ -1,4 +1,3 @@
-// src/webhooks/monday-webhook.service.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 // import { BadRequestException } from '@nestjs/common';
 import { MondayWebhookService } from './monday-webhook.service';
