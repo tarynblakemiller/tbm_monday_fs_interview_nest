@@ -18,10 +18,13 @@ export class MondayClient {
 
   private validateAndMaskToken(): string {
     const token = this.configService.getOrThrow('monday.apiToken');
-    if (!token || token.length < 32) {
+    const isDevelopment =
+      this.configService.get('app.nodeEnv') === 'development';
+
+    // Skip validation in development mode
+    if (!isDevelopment && (!token || token.length < 32)) {
       throw new Error('Invalid Monday.com API token format');
     }
-
     const maskedToken = `${token.slice(0, 4)}...${token.slice(-4)}`;
     this.logger.log(`Initializing Monday client with token: ${maskedToken}`);
 

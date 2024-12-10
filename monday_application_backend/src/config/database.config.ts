@@ -11,7 +11,7 @@ export const environmentValidationSchema = Joi.object({
   DB_NAME: Joi.string().required(),
 
   //monday.com
-  MONDAY_API_URL: Joi.string().uri().required(),
+  MONDAY_API_URL: Joi.string().default('https://api.monday.com/v2'),
   MONDAY_API_TOKEN: Joi.string().required(),
   MONDAY_BOARD_ID: Joi.string().required(),
 
@@ -59,6 +59,7 @@ export const mondayConfig = registerAs('monday', () => {
     apiUrl: process.env.MONDAY_API_URL,
     apiToken: process.env.MONDAY_API_TOKEN,
     boardId: process.env.MONDAY_BOARD_ID,
+    webhookSecret: process.env.MONDAY_WEBHOOK_SECRET,
   };
 
   Object.entries(config).forEach(([key, value]) => {

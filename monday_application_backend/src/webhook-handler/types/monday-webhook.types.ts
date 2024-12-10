@@ -10,32 +10,59 @@ export type MondayColumnType =
   | 'long-text';
 
 export interface MondayWebhookChallenge {
-  challengeId: string;
-  challengeType: string;
-  type: 'challenge';
+  challenge: string;
+  challengeType?: string;
+  type?: 'challenge';
 }
 
 export interface MondayWebhookEvent {
   type:
-    | 'create_item'
-    | 'change_column_value'
-    | 'change_status'
-    | 'delete_item'
+    | 'create_pulse'
+    | 'update_column_value'
+    | 'delete_pulse'
     | 'create_update';
+  userId: number;
+  originalTriggerUuid: string | null;
   boardId: number;
-  itemId: number;
-  pulseId?: number;
+  pulseId: number;
+  pulseName?: string;
+  groupId?: string;
   columnId?: string;
+  columnValues?: Record<string, any>; // If needed
+  body?: string; // For create_update events
+  textBody?: string;
   columnType?: MondayColumnType;
   value?: {
-    label?: string;
+    label?:
+      | string
+      | {
+          index: number;
+          text: string;
+          style: {
+            color: string;
+            border: string;
+            var_name: string;
+          };
+        };
     value?: string | number | boolean | string[];
     text?: string;
+    date?: string;
+    time?: string | null;
   };
+  app: 'monday';
+  triggerTime: string;
+  subscriptionId: number;
+  triggerUuid: string;
 }
 
-export interface MondayWebhookPayload {
-  event: MondayWebhookEvent;
-  challengeId?: string;
-  challengeType?: string;
+export type MondayWebhookPayload =
+  | MondayWebhookChallenge
+  | {
+      event: MondayWebhookEvent;
+    };
+
+export interface MondayWebhookResponse {
+  challenge?: string;
+  success?: boolean;
+  message?: string;
 }

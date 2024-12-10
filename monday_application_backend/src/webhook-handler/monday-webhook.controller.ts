@@ -2,73 +2,59 @@ import {
   Controller,
   Body,
   Post,
-  Get,
   Headers,
-  Query,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
-// import {
-//   MondayWebhookPayload,
-//   MondayWebhookChallenge,
-// } from './types/monday-webhook.types';
+import { Logger } from '@nestjs/common';
 import { MondayWebhookService } from './monday-webhook.service';
-
-@Controller('/')
-export class MondayChallengeController {
-  @Post()
-  challenge() {
-    return this.challenge;
-  }
-}
+import {
+  MondayWebhookPayload,
+  MondayWebhookResponse,
+} from './types/monday-webhook.types';
 
 @Controller('webhooks/monday')
 export class MondayWebhookController {
+  private readonly logger = new Logger(MondayWebhookController.name);
+
   constructor(private readonly webhookService: MondayWebhookService) {}
 
-  @Get()
+  @Post()
   async handleWebhook(
-    @Body()
-    payload: {
-      boardId: string;
-      config: any;
-      connections: {
-        webhooks: {
-          method: string;
-          url: string;
-        };
-      };
-      options: any;
-      recipeId: number;
-      recipeKind: string;
-      token: string;
-    },
-    @Headers('authorization') signature?: string,
-  ) {
-    if ('challengeId' in payload && 'challengeType' in payload) {
-      console.log('Received challenge request:', payload);
-      return { challenge: payload.challengeId };
-    }
-
-    if (!signature) {
-      throw new BadRequestException('Missing signature header');
-    }
-
+    @Headers('x-monday-signature') signature: string,
+    @Body() payload: MondayWebhookPayload,
+  ): Promise<MondayWebhookResponse> {
     try {
-      const rawPayload = JSON.stringify(payload);
-      await this.webhookService.handleWebhook(rawPayload, signature);
-      return { success: true };
-    } catch (error) {
-      console.error('Webhook processing error:', error);
-      throw error;
-    }
-  }
+      if ('challenge' in payload) {
+        this.logger.debug('Received challenge request');
+        return { challenge: payload.challenge };
+      }
 
-  @Post('test')
-  async testWebhook() {
-    const boardId = process.env.MONDAY_BOARD_ID;
-    if (!boardId) {
-      throw new BadRequestException('MONDAY_BOARD_ID not configured');
+      if (!signature) {
+        throw new UnauthorizedException('Missing signature header');
+      }
+
+      // Process the webhook event
+      await this.webhookService.processWebhook(payload, signature);
+
+      return {
+        success: true,
+        message: `Successfully processed ${payload.event.type} event`,
+      };
+    } catch (error) {
+      this.logger.error(
+        `Webhook processing error: ${error.message}`,
+        error.stack,
+      );
+
+      if (
+        error instanceof BadRequestException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+
+      throw new BadRequestException('Failed to process webhook');
     }
-    return { message: 'Webhook endpoint is working' };
   }
 }
